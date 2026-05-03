@@ -1,14 +1,16 @@
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 API_URL = "https://v3.football.api-sports.io/"
-API_KEY = "d5427e98f33ff48cc19aa584e1c926bb"  
+API_KEY = os.getenv("API_FOOTBALL_KEY")
 
 HEADERS = {
     "x-apisports-key": API_KEY
 }
-
-
-# ⚽ 1. Get team info
+# Get team info
 def get_team_info(team: str) -> dict:
     response = requests.get(
         f"{API_URL}/teams",
@@ -32,7 +34,7 @@ def get_team_info(team: str) -> dict:
     }
 
 
-# ⚽ 2. Get live scores
+# Get live scores
 def get_live_scores(league: str) -> dict:
     response = requests.get(
         f"{API_URL}/fixtures",
@@ -57,7 +59,7 @@ def get_live_scores(league: str) -> dict:
     return {"matches": results}
 
 
-# ⚽ 3. Player stats (basic)
+# Player stats (basic)
 def get_player_stats(player: str) -> dict:
     response = requests.get(
         f"{API_URL}/players",
@@ -80,7 +82,7 @@ def get_player_stats(player: str) -> dict:
     }
 
 
-# ⚽ 4. Simple prediction (mock for now)
+# Simple prediction (mock for now)
 def predict_match(home_team: str, away_team: str) -> dict:
     return {
         "prediction": f"{home_team} vs {away_team} is expected to be a close match",
